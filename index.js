@@ -206,4 +206,4 @@ function image(msg) {
     });
 }
 
-bot.login(proccess.env.token);
+bot.login(token);
