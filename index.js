@@ -158,12 +158,16 @@ bot.on('message', msg => {
                         .addField("^info [Arg}")
                         .setDescription("Use The \"^Help\" Commands to List commands for basic user accounts")
 
-
+//dailyrandomfacts.com
                         msg.author.send(Embed);
                         break;
                         case 'Meme':
                             image2(msg);
                             break;
+                            case 'Fact':
+                                image3(msg);
+                                break;
+
 
 
 
@@ -243,5 +247,41 @@ function image2(msg) {
 
     });
 }
+function image3(msg) {
+
+    var options = {
+        url: "http://results.dogpile.com/serp?qc=images&q=" + "dailyrandomfacts.com",
+        method: "GET",
+        headers: {
+            "Accept": "text/html",
+            "User-Agent": "Chrome"
+        }
+    };
+
+    request(options, function (error, response, responseBody) {
+        if (error) {
+            return;
+        }
+
+        $ = cheerio.load(responseBody);
+
+
+        var links = $(".image a.link");
+
+        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+
+        console.log(urls);
+        if (!urls.length) {
+
+            return;
+
+        }
+
+        //send request
+        msg.channel.send(urls[Math.floor(Math.random() * urls.length)]);
+
+    });
+}
+
 
 bot.login(token);
