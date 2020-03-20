@@ -1,3 +1,4 @@
+//Discord Github Rep. File
 const Discord = require('discord.js');
 const {Client, RichEmbed} = require('discord.js');
 const bot = new Client();
