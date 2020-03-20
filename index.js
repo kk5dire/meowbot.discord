@@ -167,6 +167,9 @@ bot.on('message', msg => {
                             case 'Fact':
                                 image3(msg);
                                 break;
+                                case 'Kawaii':
+                                    image4(msg);
+                                    break;
 
 
 
@@ -251,6 +254,41 @@ function image3(msg) {
 
     var options = {
         url: "http://results.dogpile.com/serp?qc=images&q=" + "dailyrandomfacts.com",
+        method: "GET",
+        headers: {
+            "Accept": "text/html",
+            "User-Agent": "Chrome"
+        }
+    };
+
+    request(options, function (error, response, responseBody) {
+        if (error) {
+            return;
+        }
+
+        $ = cheerio.load(responseBody);
+
+
+        var links = $(".image a.link");
+
+        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+
+        console.log(urls);
+        if (!urls.length) {
+
+            return;
+
+        }
+
+        //send request
+        msg.channel.send(urls[Math.floor(Math.random() * urls.length)]);
+
+    });
+}
+function image4(msg) {
+
+    var options = {
+        url: "http://results.dogpile.com/serp?qc=images&q=" + "kawaii",
         method: "GET",
         headers: {
             "Accept": "text/html",
