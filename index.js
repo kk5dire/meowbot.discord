@@ -136,11 +136,12 @@ bot.on('message', msg => {
 
         let msgArgs = args.slice(1).join(" ");
 
+        const pollCreator = msg.author
         msg.channel.send("@!polls")
         const PollEmbed = new Discord.MessageEmbed()
         .setTitle("Poll")
         .setColor(0x21daf4)
-        .addField(`${user.tag} Started a poll. Vote now!`)
+        .addField(`${pollCreator} Started a poll. Vote now!`)
         .addField("🗳️" + "**" + msgArgs + "**")
         msg.channel.send(PollEmbed).then(messageReaction => {
             messageReaction.react("👍");
