@@ -136,8 +136,8 @@ bot.on('message', msg => {
 
         let msgArgs = args.slice(1).join(" ");
 
-        const pollCreator = msg.author
-        msg.channel.send("@!polls")
+        const pollCreator = msg.author.tag
+        msg.channel.send(`@!polls     @everyone`)
         const PollEmbed = new Discord.MessageEmbed()
         .setTitle("Poll")
         .setColor(0x21daf4)
