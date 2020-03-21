@@ -136,8 +136,13 @@ bot.on('message', msg => {
 
         let msgArgs = args.slice(1).join(" ");
 
-        msg.channel.send(`@everyone ${msg.author} Started a poll. Vote now!`);
-        msg.channel.send("🗳️" + "**" + msgArgs + "**").then(messageReaction => {
+        msg.channel.send("@polls")
+        const PollEmbed = new Discord.MessageEmbed()
+        .setTitle("Poll")
+        .setColor(0x21daf4)
+        .addField(`${msg.author} Started a poll. Vote now!`)
+        .addField("🗳️" + "**" + msgArgs + "**")
+        msg.channel.send(PollEmbed).then(messageReaction => {
             messageReaction.react("👍");
             messageReaction.react("👎");
             msg.delete(5000).catch(console.error);
