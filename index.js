@@ -176,6 +176,15 @@ bot.on('message', msg => {
                                 case 'Kawaii':
                                     image4(msg);
                                     break;
+                                    
+                                    case 'image':
+                                        if(!args[1]){
+                                            msg.reply("Sorry Missing arg \"^image <----[here]\"");
+                                            break;
+                                        }
+                                    imagecustom(msg);
+                                    break;
+                                        
 
 
 
@@ -224,7 +233,7 @@ function image(msg) {
 function image2(msg) {
 
     var options = {
-        url: "http://results.dogpile.com/serp?qc=images&q=" + "Clean Memes",
+        url: "http://results.dogpile.com/serp?qc=images&q=" + " Memes",
         method: "GET",
         headers: {
             "Accept": "text/html",
@@ -325,7 +334,42 @@ function image4(msg) {
         msg.channel.send(urls[Math.floor(Math.random() * urls.length)]);
 
     });
-}
+    
+    function imagecustom(msg) {
+
+        var options = {
+            url: "http://results.dogpile.com/serp?qc=images&q=" + `${args}`,
+            method: "GET",
+            headers: {
+                "Accept": "text/html",
+                "User-Agent": "Chrome"
+            }
+        };
+    
+        request(options, function (error, response, responseBody) {
+            if (error) {
+                return;
+            }
+    
+            $ = cheerio.load(responseBody);
+    
+    
+            var links = $(".image a.link");
+    
+            var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+    
+            console.log(urls);
+            if (!urls.length) {
+    
+                return;
+    
+            }
+    
+            //send request
+            msg.channel.send(urls[Math.floor(Math.random() * urls.length)]);
+    
+        });
+}   }
 
 
 bot.login(token);
